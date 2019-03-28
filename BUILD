@@ -17,11 +17,24 @@ go_image(
 container_image(
     name = "go_base_image",
     base = GO_DEFAULT_BASE,
-    ports = ["8181"]
+    ports = ["8181"],
 )
 
 go_image(
     name = "server_image_not_runnable",
     binary = ":server",
     base = ":go_base_image",
+)
+
+container_image(
+    name = "go_base_image_workaround",
+    base = GO_DEFAULT_BASE,
+    ports = ["8181"],
+    legacy_run_behavior = False,
+)
+
+go_image(
+    name = "server_image_workaround",
+    binary = ":server",
+    base = ":go_base_image_workaround",
 )
